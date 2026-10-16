@@ -310,6 +310,33 @@ for (const width of [1440, 768, 390]) {
   });
 }
 
+test("page fits the viewport and brief radio buttons remain keyboard accessible", async ({
+  page,
+}) => {
+  for (const width of [320, 360, 390, 610, 768, 900, 1440]) {
+    await page.setViewportSize({ width, height: 900 });
+    await open(page, "next");
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+      .toBe(width);
+    if (width <= 900) await page.locator(".menu-toggle").click();
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+      .toBe(width);
+    await page.locator("#m-kamp").focus();
+    await page.locator("#m-kamp").press("Space");
+    await expect(page.locator("#m-kamp")).toBeChecked();
+    await expect(page.locator("#brief-out")).toContainText("Mode   : Kampanye");
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+      .toBe(width);
+    await page.evaluate(() =>
+      window.scrollTo({ left: 1000, behavior: "instant" }),
+    );
+    expect(await page.evaluate(() => window.scrollX)).toBe(0);
+  }
+});
+
 test("Next server renders content and defaults with JavaScript disabled", async ({
   browser,
 }) => {

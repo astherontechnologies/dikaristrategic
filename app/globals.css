@@ -1441,6 +1441,7 @@ ol {
   box-shadow: 4px 4px 0 var(--orange);
 }
 .modes {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -1453,6 +1454,12 @@ ol {
 }
 .modes input {
   position: absolute;
+  inset: 0 auto auto 0;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  border: 0;
+  clip-path: inset(50%);
   opacity: 0;
   pointer-events: none;
 }
