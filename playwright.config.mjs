@@ -15,7 +15,7 @@ export default defineConfig({
   },
   webServer: [
     {
-      command: "npm.cmd run start -- --hostname 127.0.0.1 --port 3100",
+      command: "node scripts/serve-static.mjs --hostname 127.0.0.1 --port 3100",
       url: "http://127.0.0.1:3100",
       reuseExistingServer: !process.env.CI,
     },

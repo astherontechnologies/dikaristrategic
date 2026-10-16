@@ -22,6 +22,33 @@ npm run build
 npm start
 ```
 
+Build memakai `output: "export"` dan menghasilkan folder `out/`. `npm start` menyajikan folder tersebut untuk preview lokal, karena `next start` tidak digunakan untuk static export.
+
+Jika memakai Bun:
+
+```sh
+bun install
+bun run build
+bun run start
+```
+
+Preview lokal tetap memakai Node.js melalui script `start`.
+
+## Deploy ke Cloudflare Pages
+
+Gunakan pengaturan build berikut:
+
+| Pengaturan             | Nilai                                                 |
+| ---------------------- | ----------------------------------------------------- |
+| Framework preset       | Next.js (Static HTML Export)                          |
+| Build command          | `bun run build` atau `bunx next build`                |
+| Build output directory | `out`                                                 |
+| Root directory         | Kosong, jika `package.json` berada di root repository |
+
+Commit dan push perubahan konfigurasi, lalu deploy ulang. Folder `out/` dihasilkan oleh build Cloudflare dan tidak perlu di-commit.
+
+Interaksi React, arena, game, dan formulir brief berjalan di browser dan tetap tersedia pada static export. Jika nanti menambah fitur yang memerlukan server Next.js, seperti Server Actions atau rendering per request, konfigurasi hosting perlu disesuaikan.
+
 ## Struktur
 
 - `app/page.jsx`: halaman utama.
